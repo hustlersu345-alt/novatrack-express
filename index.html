@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaTrack Express</title>
+<style>
+body{font-family:Arial;margin:0;background:#f4f6f9;}
+header{background:#0a1f44;color:white;padding:20px;text-align:center;}
+nav{background:#132c63;text-align:center;padding:10px;}
+nav a{color:white;margin:0 15px;text-decoration:none;font-size:14px;}
+.container{text-align:center;padding:30px;}
+input,button{padding:12px;margin:5px;width:80%;max-width:400px;}
+button{background:#0a1f44;color:white;border:none;}
+.card{background:white;margin:20px auto;padding:20px;width:90%;max-width:500px;display:none;box-shadow:0 0 10px rgba(0,0,0,0.1);}
+.timeline{background:#e5e7eb;margin:6px;padding:8px;border-radius:4px;}
+footer{background:#0a1f44;color:white;text-align:center;padding:20px;margin-top:40px;font-size:12px;}
+</style>
+</head>
+<body>
+
+<header>
+<h1>NovaTrack Express</h1>
+<p>Global Logistics & Freight Solutions</p>
+</header>
+
+<nav>
+<a href="index.html">Track</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+<a href="terms.html">Terms</a>
+</nav>
+
+<div class="container">
+<h2>Track Your Shipment</h2>
+<input type="text" id="trackInput" placeholder="Enter Tracking Number">
+<br>
+<button onclick="track()">Track Shipment</button>
+<div class="card" id="result"></div>
+</div>
+
+<footer>
+© 2026 NovaTrack Express | All Rights Reserved
+</footer>
+
+<script>
+
+const shipments = {
+  "NTX1001": {
+    status: "In Transit",
+    origin: "New York, USA",
+    destination: "London, UK",
+    delivery: "March 3, 2026",
+    timeline: [
+      "Shipment Created - Feb 25",
+      "Departed US Facility - Feb 26",
+      "Arrived at UK Distribution Hub - Feb 27"
+    ]
+  },
+  "NTX1002": {
+    status: "Delivered",
+    origin: "Berlin, Germany",
+    destination: "Paris, France",
+    delivery: "Delivered Feb 26, 2026",
+    timeline: [
+      "Shipment Created - Feb 20",
+      "Out For Delivery - Feb 26",
+      "Delivered Successfully - Feb 26"
+    ]
+  }
+};
+
+function track(){
+  const code = document.getElementById("trackInput").value.trim();
+  const data = shipments[code];
+  const box = document.getElementById("result");
+
+  if(data){
+    let timelineHTML="";
+    data.timeline.forEach(item=>{
+      timelineHTML += `<div class="timeline">${item}</div>`;
+    });
+
+    box.innerHTML = `
+      <h3>Status: ${data.status}</h3>
+      <p><strong>From:</strong> ${data.origin}</p>
+      <p><strong>To:</strong> ${data.destination}</p>
+      ${timelineHTML}
+      <p><strong>Estimated Delivery:</strong> ${data.delivery}</p>
+    `;
+  } else {
+    box.innerHTML = "<p>Tracking number not found.</p>";
+  }
+
+  box.style.display="block";
+}
+
+</script>
+
+</body>
+</html>
